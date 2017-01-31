@@ -36,17 +36,17 @@ for (var i = 0; i < 1000; i++){
 	var cube = new THREE.Mesh( geometry, material );
 	var cube2 = new THREE.Mesh( geometry, material );
 	if (positionY < 0){
-		cube.position.y = positionY - (Math.random() * (5 - 0) + (0));
+		cube.position.y = positionY - (Math.random() * (7 - 0) + (0));
 		cube2.position.y = positionY - (Math.random() * (7 - 0) + (0));
 	} else {
-		cube.position.y = positionY + (Math.random() * (5 - 0) + (0));
+		cube.position.y = positionY + (Math.random() * (7 - 0) + (0));
 		cube2.position.y = positionY + (Math.random() * (7 - 0) + (0));
 	}
 	if (positionX < 0){
-		cube.position.x = positionX - (Math.random() * (5 - 0) + (0));
+		cube.position.x = positionX - (Math.random() * (7 - 0) + (0));
 		cube2.position.x = positionX - (Math.random() * (7 - 0) + (0));
 	} else {
-		cube.position.x = positionX + (Math.random() * (5 - 0) + (0));
+		cube.position.x = positionX + (Math.random() * (7 - 0) + (0));
 		cube2.position.x = positionX + (Math.random() * (7 - 0) + (0));
 	}
 	// cube.position.x = positionX;
