@@ -156,7 +156,7 @@ document.querySelector('body').addEventListener("click", function(){
 		}
 
 		for (var i = 0; i < middle.children.length; i++){
-			TweenMax.to(middle.children[i].material, 1 ,{opacity: 0, delay: 25})
+			TweenMax.to(middle.children[i].material, 4 ,{opacity: 0, delay: 25})
 		}
 
 		TweenMax.to(middle.rotation, 1, {x: THREE.Math.degToRad(360), delay: 31, onComplete(){
@@ -169,15 +169,19 @@ document.querySelector('body').addEventListener("click", function(){
 		setTimeout(function(){
 			TweenMax.to(middle.rotation, 1, {x:THREE.Math.degToRad(90)});
 			TweenMax.to('body', 1 ,{backgroundColor: "white"})
-			TweenMax.to(camera.position, 3, {y: 1000, repeat: 10, yoyo: true})
+			TweenMax.to(camera.position, 3, {z: -500, repeat: 9, yoyo: true, onComplete(){
+				TweenMax.to(camera.position, 3, {z: 500})
+			}})
+			TweenMax.to('body', 3, {backgroundColor: "#93b7f2",repeat: 10, yoyo: true, onComplete(){
+			}})
 
 		}, 64000)
 
-		// setTimeout(function(){
-		// 	TweenMax.to(middle.rotation, 1, {x:THREE.Math.degToRad(180)});
-		// 	TweenMax.to('body', 1 ,{backgroundColor: "black"})
-		// 	TweenMax.fromTo(sunCube.position, 5 ,{y: window.innerHeight}, {y: window.innerHeight*-1})
-		// }, 97000)
+		setTimeout(function(){
+			TweenMax.to(middle.rotation, 1, {x:THREE.Math.degToRad(180)});
+			TweenMax.to('body', 5 ,{backgroundColor: "black"})
+			TweenMax.fromTo(sunCube.position, 5 ,{y: window.innerHeight}, {y: window.innerHeight*-1})
+		}, 97000)
 	}
 })
 
