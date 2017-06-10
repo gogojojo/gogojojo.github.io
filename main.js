@@ -135,9 +135,11 @@ for (var i = 0; i < middle.children.length; i++){
 	TweenMax.to(middle.children[i].position, time ,{y: window.innerHeight*-1, repeat: -1})
 }
 
-document.querySelector('body').addEventListener("click", function(){
+document.querySelector('#play').addEventListener("click", function(){
+
 	if (!playing){
 		playing = true;
+		TweenMax.to('h1', 1, {opacity: 0})
 		document.querySelector('audio').play();
 
 		TweenMax.to('#vince', 1.5, {opacity: 1, delay: 1})
