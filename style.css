@@ -1,11 +1,51 @@
-body { 
-  margin: 0; 
+body {
+  margin: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background-color: white;
 }
 
-canvas { 
-  width: 100%; 
+canvas {
+  width: 100%;
   height: 100%;
+}
+audio{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+body{
+	color: white;
+}
+#name{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 60%
+}
+#rcd{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 60%
+}
+#vince{
+	opacity: 0;
+}
+#staples{
+	opacity: 0;
+}
+
+#rain{
+	opacity: 0;
+}
+#come{
+	opacity: 0;
+}
+
+#down{
+	opacity: 0;
 }

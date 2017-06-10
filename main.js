@@ -12,125 +12,72 @@ var scene = new THREE.Scene();
 // adds the camera
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 // sets up the renderer
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({alpha: true});
+renderer.setClearColor( 0x000000, 0 );
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
-document.addEventListener('mousedown', onDocumentMouseDown, false);
-document.addEventListener('touchstart', onDocumentTouchStart, false);
-document.addEventListener('touchmove', onDocumentTouchMove, false);
+// document.addEventListener('mousedown', onDocumentMouseDown, false);
+// document.addEventListener('touchstart', onDocumentTouchStart, false);
+// document.addEventListener('touchmove', onDocumentTouchMove, false);
 
 // adds in geometry
 var geometry1 = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-var material1 = new THREE.MeshLambertMaterial( { color: 0xffffff, opacity: 0 } );
+var material1 = new THREE.MeshLambertMaterial( { color: 0x000000, opacity: 0} );
 var middle = new THREE.Mesh( geometry1, material1 );
-var middle2 = new THREE.Mesh( geometry1, material1 );
-var middle3 = new THREE.Mesh( geometry1, material1 );
-var middle4 = new THREE.Mesh( geometry1, material1 );
 middle.material.visible = false;
-middle2.material.visible = false;
-middle3.material.visible = false;
-middle4.material.visible = false;
 
 var group = new THREE.Group();
+middle.position.y = 0;
+middle.position.x = window.innerWidth/2*-1;
 group.add(middle);
-group.add(middle2);
-group.add(middle3);
-group.add(middle4);
 
 scene.add(group);
+var rainMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff, opacity: 1, transparent: true } );
+var normalMat = new THREE.MeshNormalMaterial({opacity: 0, transparent: true})
+// rain
+for (var i = 0; i < window.innerWidth; i++){
 
-for (var i = 0; i < 700; i++){
-
-	var positionY = 40 * Math.sin(i);
-	var positionX = 40 * Math.cos(i);
-	var positionY3 = 15 * Math.sin(i);
-	var positionX3 = 15 * Math.cos(i);
-
-	var positionZ = (Math.random() * (10 - (-10)) + (-10))
-	var geometry = Math.random() * (2 - 0.5) + (0.5);
-	var geometrySmall = Math.random() * (0.5 - 0.1) + (0.1)
+	var positionZ = (Math.random() * (20 - (-20)) + (-20))
+	var geometry = Math.random() * (5 - 0.5) + (0.5);
 
 	var geometry = new THREE.BoxGeometry(geometry, geometry, geometry);
-	var geometrySmall = new THREE.BoxGeometry(geometrySmall, geometrySmall, geometrySmall);
-	var material = new THREE.MeshNormalMaterial();
 
-	var cube = new THREE.Mesh( geometry, material );
-	var cube2 = new THREE.Mesh( geometry, material );
-	var cube3 = new THREE.Mesh( geometrySmall, material );
-	var cube4 = new THREE.Mesh( geometrySmall, material );
+	var cube = new THREE.Mesh( geometry, normalMat );
+
 	cube.position.z = positionZ;
-	cube2.position.z = positionZ;
-	cube3.position.z = positionZ;
-	cube4.position.z = positionZ;
-	if (positionY < 0){
-		cube.position.y = positionY - (Math.random() * (7 - 0) + (0));
-		cube2.position.y = positionY - (Math.random() * (7 - 0) + (0));
-		cube3.position.y = positionY3 - (Math.random() * (5 - 0) + (0));
-		cube4.position.y = positionY3 - (Math.random() * (5 - 0) + (0));
-	} else {
-		cube.position.y = positionY + (Math.random() * (7 - 0) + (0));
-		cube2.position.y = positionY + (Math.random() * (7 - 0) + (0));
-		cube3.position.y = positionY3 + (Math.random() * (5 - 0) + (0));
-		cube4.position.y = positionY3 + (Math.random() * (5 - 0) + (0));
-	}
-	if (positionX < 0){
-		cube.position.x = positionX - (Math.random() * (7 - 0) + (0));
-		cube2.position.x = positionX - (Math.random() * (7 - 0) + (0));
-		cube3.position.x = positionX3 - (Math.random() * (5 - 0) + (0));
-		cube4.position.x = positionX3 - (Math.random() * (5 - 0) + (0));
-	} else {
-		cube.position.x = positionX + (Math.random() * (7 - 0) + (0));
-		cube2.position.x = positionX + (Math.random() * (7 - 0) + (0));
-		cube3.position.x = positionX3 + (Math.random() * (5 - 0) + (0));
-		cube4.position.x = positionX3 + (Math.random() * (5 - 0) + (0));
-	}
+	cube.position.y = window.innerHeight;
+	cube.position.x = i;
 	// cube.position.x = positionX;
 	middle.add( cube );
-	middle2.add( cube2 );
-	middle3.add( cube3 );
-	middle4.add( cube4 );
 }
-middle.rotation.x = THREE.Math.degToRad(90)
-middle2.rotation.y = THREE.Math.degToRad(90);
-middle3.rotation.x = THREE.Math.degToRad(90);
-middle4.rotation.y = THREE.Math.degToRad(90);
 
-camera.position.z = 100;
+middle.rotation.x = THREE.Math.degToRad(180);
+// sun
+var sunGeometry = new THREE.SphereGeometry( 100, 6, 6 );
+var sunMaterial = new THREE.MeshBasicMaterial( { color: 0xFFFB85, opacity: 1, transparent: true } );
+
+var sunCube = new THREE.Mesh( sunGeometry, sunMaterial );
+sunCube.position.y = window.innerHeight;
+middle.position.x = window.innerWidth/2*-1;
+group.add( sunCube );
+
+
+camera.position.z = 500;
 // adds the light
-var light = new THREE.PointLight( 0xFFFF00 );
-light.position.set( 10, 0, 25 );
+var light = new THREE.PointLight( 0xffffff );
+light.position.set( 10, 0, 200 );
 scene.add( light );
 
-var scaleParticles = function(){
-	// TweenMax.to(middle.scale, 1, {x: 1.05, repeat: -1, yoyo:true });
-	// TweenMax.to(middle.scale, 1, {y: 1.05, repeat: -1, yoyo:true });
-	// TweenMax.to(middle.scale, 1, {z: 1.05, repeat: -1, yoyo:true });
-}
 // animates the cube
 var render = function () {
   requestAnimationFrame( render );
-
-  middle.rotation.z += 0.009;
-  middle.rotation.x -= 0.009;
-
-  middle2.rotation.z -= 0.009;
-  middle2.rotation.y -= 0.009;
-
-  middle3.rotation.z += 0.009;
-  middle3.rotation.y -= 0.009;
-
-  middle4.rotation.z -= 0.009;
-  middle4.rotation.y -= 0.009;
-
   for (var i = 0; i < middle.children.length; i++){
   	middle.children[i].rotation.x += 0.1;
   	middle.children[i].rotation.y += 0.1;
   	middle.children[i].rotation.z += 0.1;
-
-  	middle2.children[i].rotation.x += 0.1;
-  	middle2.children[i].rotation.y += 0.1;
-  	middle2.children[i].rotation.z += 0.1;
   }
+
+  	sunCube.rotation.y += 0.05;
 
   cube.geometry.verticesNeedUpdate = true;
   camera.updateProjectionMatrix();
@@ -139,47 +86,103 @@ var render = function () {
 };
 
 render();
-scaleParticles();
 
 
-function onDocumentMouseDown(event) {
-  event.preventDefault();
-  document.addEventListener('mousemove', onDocumentMouseMove, false);
-  document.addEventListener('mouseup', onDocumentMouseUp, false);
-  document.addEventListener('mouseout', onDocumentMouseOut, false);
-  mouseXOnMouseDown = event.clientX - windowHalfX;
-  targetRotationOnMouseDown = targetRotation;
+// function onDocumentMouseDown(event) {
+//   event.preventDefault();
+//   document.addEventListener('mousemove', onDocumentMouseMove, false);
+//   document.addEventListener('mouseup', onDocumentMouseUp, false);
+//   document.addEventListener('mouseout', onDocumentMouseOut, false);
+//   mouseXOnMouseDown = event.clientX - windowHalfX;
+//   targetRotationOnMouseDown = targetRotation;
+// }
+
+// function onDocumentMouseMove(event) {
+//   mouseX = event.clientX - windowHalfX;
+//   targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.02;
+// }
+
+// function onDocumentMouseUp(event) {
+//   document.removeEventListener('mousemove', onDocumentMouseMove, false);
+//   document.removeEventListener('mouseup', onDocumentMouseUp, false);
+//   document.removeEventListener('mouseout', onDocumentMouseOut, false);
+// }
+
+// function onDocumentMouseOut(event) {
+//   document.removeEventListener('mousemove', onDocumentMouseMove, false);
+//   document.removeEventListener('mouseup', onDocumentMouseUp, false);
+//   document.removeEventListener('mouseout', onDocumentMouseOut, false);
+// }
+
+// function onDocumentTouchStart(event) {
+//   if (event.touches.length == 1) {
+//     event.preventDefault();
+//     mouseXOnMouseDown = event.touches[0].pageX - windowHalfX;
+//     targetRotationOnMouseDown = targetRotation;
+//   }
+// }
+
+// function onDocumentTouchMove(event) {
+//   if (event.touches.length == 1) {
+//     event.preventDefault();
+//     mouseX = event.touches[0].pageX - windowHalfX;
+//     targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.05;
+//   }
+// }
+var playing = false;
+for (var i = 0; i < middle.children.length; i++){
+	var time = (Math.random() * (10 - (1)) + (1))
+	TweenMax.to(middle.children[i].position, time ,{y: window.innerHeight*-1, repeat: -1})
 }
 
-function onDocumentMouseMove(event) {
-  mouseX = event.clientX - windowHalfX;
-  targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.02;
-}
+document.querySelector('body').addEventListener("click", function(){
+	if (!playing){
+		playing = true;
+		document.querySelector('audio').play();
 
-function onDocumentMouseUp(event) {
-  document.removeEventListener('mousemove', onDocumentMouseMove, false);
-  document.removeEventListener('mouseup', onDocumentMouseUp, false);
-  document.removeEventListener('mouseout', onDocumentMouseOut, false);
-}
+		TweenMax.to('#vince', 1.5, {opacity: 1, delay: 1})
+		TweenMax.to('#staples', 1.5, {opacity: 1, delay: 3})
+		TweenMax.to('#name', 1.5, {opacity: 0, delay: 5})
+		TweenMax.to('#rain', 1.5, {opacity: 1, delay: 7})
+		TweenMax.to('#come', 1.5, {opacity: 1, delay: 9})
+		TweenMax.to('#down', 1.5, {opacity: 1, delay: 11})
+		TweenMax.to('#rcd', 1.5, {opacity: 0, delay: 17})
 
-function onDocumentMouseOut(event) {
-  document.removeEventListener('mousemove', onDocumentMouseMove, false);
-  document.removeEventListener('mouseup', onDocumentMouseUp, false);
-  document.removeEventListener('mouseout', onDocumentMouseOut, false);
-}
+		TweenMax.to(sunCube.position, 5 ,{y: window.innerHeight*-1, delay: 17})
+		TweenMax.to('body', 5 ,{backgroundColor: "black", delay: 17})
 
-function onDocumentTouchStart(event) {
-  if (event.touches.length == 1) {
-    event.preventDefault();
-    mouseXOnMouseDown = event.touches[0].pageX - windowHalfX;
-    targetRotationOnMouseDown = targetRotation;
-  }
-}
+		for (var i = 0; i < middle.children.length; i++){
+			TweenMax.to(middle.children[i].material, 1 ,{opacity: 1, delay: 13.5})
+		}
 
-function onDocumentTouchMove(event) {
-  if (event.touches.length == 1) {
-    event.preventDefault();
-    mouseX = event.touches[0].pageX - windowHalfX;
-    targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * 0.05;
-  }
-}
+		for (var i = 0; i < middle.children.length; i++){
+			TweenMax.to(middle.children[i].material, 1 ,{opacity: 0, delay: 25})
+		}
+
+		TweenMax.to(middle.rotation, 1, {x: THREE.Math.degToRad(360), delay: 31, onComplete(){
+			for (var i = 0; i < middle.children.length; i++){
+				middle.children[i].material = rainMaterial;
+				TweenMax.to(middle.children[i].material, 1 ,{opacity: 1})
+			}
+		}});
+
+		setTimeout(function(){
+			TweenMax.to(middle.rotation, 1, {x:THREE.Math.degToRad(90)});
+			TweenMax.to('body', 1 ,{backgroundColor: "white"})
+
+		}, 64000)
+
+		setTimeout(function(){
+			TweenMax.to(middle.rotation, 1, {x:THREE.Math.degToRad(90)});
+			TweenMax.to('body', 1 ,{backgroundColor: "black"})
+			TweenMax.fromTo(sunCube.position, 5 ,{y: window.innerHeight}, {y: window.innerHeight*-1})
+			for (var i = 0; i < middle.children.length; i++){
+				TweenMax.to(middle.children[i].material, 1 ,{opacity: 0, onComplete(){
+					middle.children[i].material = normalMat;
+					TweenMax.to(middle.children[i].material, 1 ,{opacity: 1});
+				}})
+			}
+		}, 97000)
+	}
+})
+

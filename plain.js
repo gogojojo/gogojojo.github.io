@@ -53,3 +53,4 @@ cubeGui.add(cube.position, 'x');
 cubeGui.add(cube.position, 'y');
 cubeGui.add(cube.position, 'z');
 cubeGui.open();
+
