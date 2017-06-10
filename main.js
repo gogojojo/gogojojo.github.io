@@ -169,20 +169,15 @@ document.querySelector('body').addEventListener("click", function(){
 		setTimeout(function(){
 			TweenMax.to(middle.rotation, 1, {x:THREE.Math.degToRad(90)});
 			TweenMax.to('body', 1 ,{backgroundColor: "white"})
+			TweenMax.to(camera.position, 3, {y: 1000, repeat: 10, yoyo: true})
 
 		}, 64000)
 
-		setTimeout(function(){
-			TweenMax.to(middle.rotation, 1, {x:THREE.Math.degToRad(90)});
-			TweenMax.to('body', 1 ,{backgroundColor: "black"})
-			TweenMax.fromTo(sunCube.position, 5 ,{y: window.innerHeight}, {y: window.innerHeight*-1})
-			for (var i = 0; i < middle.children.length; i++){
-				TweenMax.to(middle.children[i].material, 1 ,{opacity: 0, onComplete(){
-					middle.children[i].material = normalMat;
-					TweenMax.to(middle.children[i].material, 1 ,{opacity: 1});
-				}})
-			}
-		}, 97000)
+		// setTimeout(function(){
+		// 	TweenMax.to(middle.rotation, 1, {x:THREE.Math.degToRad(180)});
+		// 	TweenMax.to('body', 1 ,{backgroundColor: "black"})
+		// 	TweenMax.fromTo(sunCube.position, 5 ,{y: window.innerHeight}, {y: window.innerHeight*-1})
+		// }, 97000)
 	}
 })
 
